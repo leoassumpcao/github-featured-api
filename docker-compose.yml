@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "strongPassword@098"
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./sqlserver:/var/opt/mssql/data
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: src/GitHubFeatured.API/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__AppDb: "Server=mssql-server,1433;Database=GitHub;User Id=sa;Password=strongPassword@098;TrustServerCertificate=true"
+      TrackedLanguages:0: "C#"
+      TrackedLanguages:1: "PHP"
+      TrackedLanguages:2: "C++"
+      TrackedLanguages:3: "Dart"
+      TrackedLanguages:4: "JavaScript"
+      GitHub__ApiKey: "<your github api key>"
+    ports: 
+      - "8080:80"
+    depends_on:
+      - mssql-server
+    command: ["dotnet", "ef", "database update"]
