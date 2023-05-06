@@ -50,6 +50,7 @@ Acesse o arquivo "src\GitHubFeatured.API\appsettings.json" e adicione as variáv
 Após realizar as alterações, acesse a pasta "src\GitHubFeatured.API" e execute os seguintes comandos:
 1. ```dotnet restore```
 2. ```dotnet run```
+
 Por fim, procure por "Now listening on" no console onde o comando foi executado para descobrir a URL e porta em que a API está sendo executada.
 
 Caso a variável ASPNETCORE_ENVIRONMENT esteja configurada como "Development", basta acessar a URL da API + /swagger/index.html para acessar o Swagger UI da API.
